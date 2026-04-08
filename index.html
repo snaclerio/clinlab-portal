@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClinLab Solutions Group — Staff Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cl-navy:        #0c344c;
+    --cl-dark-blue:   #2d6894;
+    --cl-medium-blue: #1C88C6;
+    --cl-sky-blue:    #07B7E9;
+    --cl-light-blue:  #a4d7e7;
+    --cl-charcoal:    #2d2e32;
+    --cl-dark-grey:   #767f84;
+    --cl-light-grey:  #a4a6ab;
+    --cl-white:       #ffffff;
+    --cl-font: 'Inter', sans-serif;
+    --sidebar-w: 240px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--cl-font);
+    background: #f4f7fa;
+    color: var(--cl-charcoal);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  /* ── TOP NAV ── */
+  .top-nav {
+    background: var(--cl-navy);
+    height: 64px;
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    gap: 0;
+  }
+
+  .nav-logo-area {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+  }
+
+  .nav-logo-placeholder {
+    height: 36px;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-logo-placeholder .wordmark {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    color: var(--cl-white);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .nav-logo-placeholder .wordmark span {
+    color: var(--cl-sky-blue);
+  }
+
+  .nav-divider {
+    width: 1px;
+    height: 28px;
+    background: rgba(255,255,255,0.2);
+    margin: 0 20px;
+  }
+
+  .nav-portal-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--cl-light-blue);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+  }
+
+  .nav-links a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 500;
+    padding: 8px 14px;
+    border-radius: 6px;
+    transition: all 0.18s ease;
+    letter-spacing: 0.03em;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active {
+    background: rgba(255,255,255,0.1);
+    color: var(--cl-white);
+  }
+
+  .nav-links a.active {
+    color: var(--cl-sky-blue);
+  }
+
+  /* ── LAYOUT WRAPPER ── */
+  .layout {
+    display: flex;
+    flex: 1;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: var(--sidebar-w);
+    background: var(--cl-white);
+    border-right: 1px solid #e2e8ed;
+    padding: 28px 0;
+    flex-shrink: 0;
+    min-height: calc(100vh - 64px);
+  }
+
+  .sidebar-section-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--cl-light-grey);
+    padding: 0 20px 10px;
+    margin-top: 20px;
+  }
+
+  .sidebar-section-label:first-child { margin-top: 0; }
+
+  .sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 20px;
+    text-decoration: none;
+    font-size: 0.84rem;
+    font-weight: 500;
+    color: var(--cl-dark-grey);
+    border-left: 3px solid transparent;
+    transition: all 0.15s ease;
+  }
+
+  .sidebar a:hover {
+    background: #f0f6fa;
+    color: var(--cl-navy);
+    border-left-color: var(--cl-light-blue);
+  }
+
+  .sidebar a.active {
+    background: #e8f4fb;
+    color: var(--cl-medium-blue);
+    border-left-color: var(--cl-medium-blue);
+    font-weight: 600;
+  }
+
+  .sidebar-icon {
+    width: 16px;
+    height: 16px;
+    opacity: 0.7;
+    flex-shrink: 0;
+  }
+
+  .sidebar-divider {
+    height: 1px;
+    background: #edf0f2;
+    margin: 14px 20px;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--cl-navy);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Crect width='56' height='100' fill='%230c344c'/%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34z' fill='none' stroke='%232d6894' stroke-width='1' opacity='0.35'/%3E%3Cpath d='M28 100L0 84V50l28-16 28 16v34z' fill='none' stroke='%232d6894' stroke-width='1' opacity='0.35'/%3E%3C/svg%3E");
+    padding: 52px 48px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    right: -60px;
+    top: -60px;
+    width: 380px;
+    height: 380px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(7,183,233,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--cl-sky-blue);
+    margin-bottom: 12px;
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.6rem;
+    color: var(--cl-white);
+    line-height: 1.15;
+    margin-bottom: 14px;
+    max-width: 560px;
+  }
+
+  .hero-sub {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.72);
+    max-width: 480px;
+    line-height: 1.65;
+  }
+
+  .hero-tagline {
+    margin-top: 24px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--cl-light-blue);
+    letter-spacing: 0.06em;
+    font-style: italic;
+  }
+
+  /* ── DEPT CARDS GRID ── */
+  .dept-section {
+    padding: 40px 48px 56px;
+  }
+
+  .section-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--cl-dark-grey);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #dde4ea;
+  }
+
+  .dept-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .dept-card {
+    background: var(--cl-white);
+    border-radius: 12px;
+    border: 1px solid #e2e8ed;
+    overflow: hidden;
+    text-decoration: none;
+    display: block;
+    transition: all 0.22s ease;
+    position: relative;
+  }
+
+  .dept-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(12,52,76,0.12);
+    border-color: var(--cl-light-blue);
+  }
+
+  .dept-card-header {
+    padding: 28px 28px 22px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .dept-card-header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='70'%3E%3Cpath d='M20 46L0 35V11L20 0l20 11v24z' fill='none' stroke='%230c344c' stroke-width='1.5'/%3E%3Cpath d='M20 70L0 59V35l20-13 20 13v24z' fill='none' stroke='%230c344c' stroke-width='1.5'/%3E%3C/svg%3E");
+  }
+
+  .dept-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .dept-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .dept-card h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--cl-navy);
+    letter-spacing: 0.01em;
+    margin-bottom: 6px;
+  }
+
+  .dept-card p {
+    font-size: 0.83rem;
+    color: var(--cl-dark-grey);
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  .dept-card-footer {
+    padding: 14px 28px;
+    border-top: 1px solid #edf0f3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .dept-card-count {
+    font-size: 0.75rem;
+    color: var(--cl-light-grey);
+    font-weight: 500;
+  }
+
+  .dept-card-cta {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--cl-medium-blue);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .dept-card-cta svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.18s ease;
+  }
+
+  .dept-card:hover .dept-card-cta svg {
+    transform: translateX(3px);
+  }
+
+  /* card accent colors */
+  .card-sales .dept-icon { background: rgba(28,136,198,0.12); }
+  .card-sales .dept-icon svg { color: var(--cl-medium-blue); }
+  .card-sales .dept-card-header { background: linear-gradient(135deg, #f0f7fc 0%, #ffffff 100%); }
+
+  .card-recruiting .dept-icon { background: rgba(7,183,233,0.12); }
+  .card-recruiting .dept-icon svg { color: var(--cl-sky-blue); }
+  .card-recruiting .dept-card-header { background: linear-gradient(135deg, #edfaff 0%, #ffffff 100%); }
+
+  .card-marketing .dept-icon { background: rgba(45,104,148,0.12); }
+  .card-marketing .dept-icon svg { color: var(--cl-dark-blue); }
+  .card-marketing .dept-card-header { background: linear-gradient(135deg, #f0f4f8 0%, #ffffff 100%); }
+
+  .card-hr .dept-icon { background: rgba(164,215,231,0.3); }
+  .card-hr .dept-icon svg { color: #1a7a9e; }
+  .card-hr .dept-card-header { background: linear-gradient(135deg, #f2fafc 0%, #ffffff 100%); }
+
+  /* ── FOOTER ── */
+  .portal-footer {
+    background: var(--cl-navy);
+    padding: 18px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .portal-footer span {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.45);
+  }
+
+  .portal-footer .tagline {
+    font-size: 0.72rem;
+    font-style: italic;
+    color: var(--cl-light-blue);
+    font-weight: 300;
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <div class="nav-logo-area">
+    <div class="nav-logo-placeholder">
+      <!-- LOGO: Replace img tag below with actual ClinLab logo asset (white/color+white variant) -->
+      <!-- <img src="assets/clinlab-logo-white.png" alt="ClinLab Solutions Group" height="32"> -->
+      <span class="wordmark">Clin<span>Lab</span> Solutions Group</span>
+    </div>
+    <div class="nav-divider"></div>
+    <span class="nav-portal-label">Staff Portal</span>
+  </div>
+  <div class="nav-links">
+    <a href="index.html" class="active">Home</a>
+    <a href="sales.html">Sales</a>
+    <a href="recruiting.html">Recruiting</a>
+    <a href="marketing.html">Marketing</a>
+    <a href="hr.html">Human Resources</a>
+  </div>
+</nav>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-section-label">Quick Links</div>
+
+    <a href="index.html" class="active">
+      <svg class="sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+      Portal Home
+    </a>
+    <a href="sales.html">
+      <svg class="sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+      Sales
+    </a>
+    <a href="recruiting.html">
+      <svg class="sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      Recruiting
+    </a>
+    <a href="marketing.html">
+      <svg class="sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/></svg>
+      Marketing
+    </a>
+    <a href="hr.html">
+      <svg class="sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+      Human Resources
+    </a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-label">Resources</div>
+
+    <a href="#">
+      <svg class="sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      IT Help Desk
+    </a>
+    <a href="#">
+      <svg class="sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+      Company Calendar
+    </a>
+    <a href="#">
+      <svg class="sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+      Staff Directory
+    </a>
+    <a href="#">
+      <svg class="sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+      SharePoint Home
+    </a>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-eyebrow">ClinLab Solutions Group — Internal Portal</div>
+      <h1>Your Central Resource Hub</h1>
+      <p class="hero-sub">Access documents, materials, templates, and tools organized by department. Everything your team needs, in one place — always current.</p>
+      <p class="hero-tagline">Resourcing Talent from Lab to Launch.</p>
+    </section>
+
+    <!-- DEPT CARDS -->
+    <section class="dept-section">
+      <div class="section-label">Department Libraries</div>
+
+      <div class="dept-grid">
+
+        <!-- SALES -->
+        <a href="sales.html" class="dept-card card-sales">
+          <div class="dept-card-header">
+            <div class="dept-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+            </div>
+            <h2>Sales</h2>
+            <p>Prospect one-sheets, capability decks, client presentations, proposal templates, and competitive positioning materials.</p>
+          </div>
+          <div class="dept-card-footer">
+            <span class="dept-card-count">Documents &amp; Templates</span>
+            <span class="dept-card-cta">Open Library <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg></span>
+          </div>
+        </a>
+
+        <!-- RECRUITING -->
+        <a href="recruiting.html" class="dept-card card-recruiting">
+          <div class="dept-card-header">
+            <div class="dept-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            </div>
+            <h2>Recruiting</h2>
+            <p>Candidate communication templates, job description frameworks, submission guides, interview scorecards, and sourcing playbooks.</p>
+          </div>
+          <div class="dept-card-footer">
+            <span class="dept-card-count">Documents &amp; Templates</span>
+            <span class="dept-card-cta">Open Library <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg></span>
+          </div>
+        </a>
+
+        <!-- MARKETING -->
+        <a href="marketing.html" class="dept-card card-marketing">
+          <div class="dept-card-header">
+            <div class="dept-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/></svg>
+            </div>
+            <h2>Marketing</h2>
+            <p>Brand assets, logo files, one-sheet templates, social media graphics, campaign materials, and brand standards documentation.</p>
+          </div>
+          <div class="dept-card-footer">
+            <span class="dept-card-count">Documents &amp; Templates</span>
+            <span class="dept-card-cta">Open Library <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg></span>
+          </div>
+        </a>
+
+        <!-- HR -->
+        <a href="hr.html" class="dept-card card-hr">
+          <div class="dept-card-header">
+            <div class="dept-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+            </div>
+            <h2>Human Resources</h2>
+            <p>Onboarding packets, policy documents, benefits guides, performance review templates, and employee handbook materials.</p>
+          </div>
+          <div class="dept-card-footer">
+            <span class="dept-card-count">Documents &amp; Templates</span>
+            <span class="dept-card-cta">Open Library <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg></span>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- FOOTER -->
+<footer class="portal-footer">
+  <span>&copy; 2025 ClinLab Solutions Group. Internal Use Only.</span>
+  <span class="tagline">Resourcing Talent from Lab to Launch.</span>
+</footer>
+
+</body>
+</html>
